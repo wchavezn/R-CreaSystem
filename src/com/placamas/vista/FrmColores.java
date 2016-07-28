@@ -292,9 +292,6 @@ void mensaje(String m){
 
 	
 protected void btnGrabarActionPerformed(ActionEvent arg0) { 
-
-	
-	
 	
 	String texto=txtIdColor.getText();
     texto=texto.replaceAll(" ", "");

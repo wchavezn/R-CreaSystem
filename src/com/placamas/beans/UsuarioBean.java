@@ -19,6 +19,7 @@ public class UsuarioBean {
 		Email=email;
 		
 	}
+	
 	public String getIdUser() {
 		return idUser;
 	}
@@ -37,6 +38,12 @@ public class UsuarioBean {
 	public void setUser_Pasw(String user_Pasw) {
 		User_Pasw = user_Pasw;
 	}
+	public String getPregunta() {
+		return Pregunta;
+	}
+	public void setPregunta(String pregunta) {
+		this.Pregunta = pregunta;
+	}
 	public String getResp() {
 		return Resp;
 	}
@@ -49,14 +56,6 @@ public class UsuarioBean {
 	public void setEmail(String email) {
 		this.Email = email;
 	}
-	public String getPregunta() {
-		return Pregunta;
-	}
-	public void setPregunta(String pregunta) {
-		this.Pregunta = pregunta;
-	}
-	
-
 	
 	
 }
