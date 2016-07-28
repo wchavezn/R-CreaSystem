@@ -22,7 +22,7 @@ import java.awt.Color;
 
 import javax.swing.UIManager;
 import java.awt.Window.Type;
-
+//ghfh
 
 @SuppressWarnings("serial")
 public class FrmLogin extends JDialog implements ActionListener{
