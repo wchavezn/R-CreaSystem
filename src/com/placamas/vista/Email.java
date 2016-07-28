@@ -9,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.Transport;
 import javax.swing.JOptionPane;
 
-
+//prueba
 public class Email {
 
 	public void sendMail(String address, String subject, String message)throws Exception{

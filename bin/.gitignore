@@ -1,5 +1,5 @@
-/gui
-/icon
+<<<<<<< HEAD
+=======
 /iconos
 /iconosmodernos
 /recursos
@@ -7,6 +7,21 @@
 /Iconos_PlacaMas
 /Imagenes
 /Set
+/database_conexion.properties
+/database_sql.properties
+>>>>>>> refs/remotes/origin/alexander
+/gui
+/icon
+<<<<<<< HEAD
+/iconos
+/iconosmodernos
+/recursos
+/toolbaricons
+/Iconos_PlacaMas
+/Imagenes
+/Set
+=======
+>>>>>>> refs/remotes/origin/alexander
 /com
 /database_conexion.properties
 /database_sql.properties
