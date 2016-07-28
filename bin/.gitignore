@@ -13,6 +13,7 @@
 /gui
 /icon
 <<<<<<< HEAD
+<<<<<<< HEAD
 /iconos
 /iconosmodernos
 /recursos
@@ -22,6 +23,8 @@
 /Set
 =======
 >>>>>>> refs/remotes/origin/alexander
+=======
+>>>>>>> 6e02af47e4fd970fee83cf740226412554f942d6
 /com
 /database_conexion.properties
 /database_sql.properties
