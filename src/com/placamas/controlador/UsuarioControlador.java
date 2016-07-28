@@ -279,7 +279,8 @@ public ArrayList<UsuarioRight> listarUsuarioLocal(){
 	}
 
 
-public UsuarioBean listarPregunta(String idpreg){
+public ArrayList<UsuarioBean> listarPregunta(String idpreg){
+	ArrayList<UsuarioBean> data = new ArrayList<UsuarioBean>();
 	UsuarioBean bean = null;
 	Connection cn=null;
 	PreparedStatement pstm=null;
@@ -287,17 +288,17 @@ public UsuarioBean listarPregunta(String idpreg){
 	try {
 		
 		cn=new ConexionDB().getConexion();
-		String sql="select ?  from user_data where IdUser="+idpreg;
+		String sql="select *  from user_data where IdUser="+idpreg;
+	
 		pstm=cn.prepareStatement(sql);//esto almacena la pregunta?
-		
-		
+
 		rs=pstm.executeQuery();
 		
 		while (rs.next()) {
-			UsuarioBean pg=new UsuarioBean(rs.getString(1),
-						rs.getString(2), sql, sql, sql);
+			bean=new UsuarioBean(rs.getString(1),
+					rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
 			
-			
+			data.add(bean);
 		}
 	
 		
@@ -312,7 +313,7 @@ public UsuarioBean listarPregunta(String idpreg){
 			e2.printStackTrace();
 		}
 	}
-	return bean;
+	return data;
 }
 
 
