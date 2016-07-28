@@ -32,6 +32,7 @@ import com.placamas.controlador.UsuarioControlador;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.border.TitledBorder;
 
 
 
@@ -73,86 +74,87 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 	public FrmCambiar() {
 		
 		usuario = new JPanel();
-		//textura.addMouseListener((MouseListener) this);
+		
 		usuario.setLayout(null);
-		/*
-		setTitle("Textura");
-		setClosable(true);
-		setBounds(100, 100, 577, 511);
-		getContentPane().setLayout(null);*/
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Cambio de Contrase\u00F1a", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setBounds(20, 121, 1113, 495);
+		usuario.add(panel);
+		panel.setLayout(null);
 		
 		JLabel lblPassActual = new JLabel("Ingresar Contraseña Actual:");
+		lblPassActual.setBounds(80, 59, 175, 19);
+		panel.add(lblPassActual);
 		lblPassActual.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblPassActual.setBounds(52, 48, 175, 19);
-		usuario.add(lblPassActual);
 		
 		txtPassAct = new JTextField();
-		txtPassAct.setBounds(276, 46, 128, 19);
+		txtPassAct.setBounds(304, 57, 128, 19);
+		panel.add(txtPassAct);
 		txtPassAct.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
-		usuario.add(txtPassAct);
 		txtPassAct.setColumns(10);
 		
 		JLabel lblNuevaCont = new JLabel("Ingresar Nueva Contaseña:");
+		lblNuevaCont.setBounds(80, 91, 175, 15);
+		panel.add(lblNuevaCont);
 		lblNuevaCont.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNuevaCont.setBounds(52, 78, 175, 15);
-		usuario.add(lblNuevaCont);
 		
 		txtPassNew = new JTextField();
-		txtPassNew.setBounds(276, 76, 128, 19);
-		usuario.add(txtPassNew);
+		txtPassNew.setBounds(304, 89, 128, 19);
+		panel.add(txtPassNew);
 		txtPassNew.setColumns(10);
 		
 		JLabel lblRepetaLaContrasea = new JLabel("Repeta la Contraseña:");
+		lblRepetaLaContrasea.setBounds(80, 125, 137, 15);
+		panel.add(lblRepetaLaContrasea);
 		lblRepetaLaContrasea.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblRepetaLaContrasea.setBounds(52, 108, 137, 15);
-		usuario.add(lblRepetaLaContrasea);
 		
 		txtPassNew1 = new JTextField();
+		txtPassNew1.setBounds(304, 123, 128, 19);
+		panel.add(txtPassNew1);
 		txtPassNew1.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
 		txtPassNew1.setColumns(10);
-		txtPassNew1.setBounds(276, 106, 128, 19);
-		usuario.add(txtPassNew1);
 		
 		separator = new JSeparator();
-		separator.setBounds(10, 140, 480, 14);
-		usuario.add(separator);
+		separator.setBounds(31, 166, 480, 14);
+		panel.add(separator);
 		
 		JLabel lblCampoOpcional = new JLabel("Campo Opcional(Cambiar Pregunta)");
+		lblCampoOpcional.setBounds(80, 180, 219, 15);
+		panel.add(lblCampoOpcional);
 		lblCampoOpcional.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblCampoOpcional.setBounds(52, 146, 219, 15);
-		usuario.add(lblCampoOpcional);
 		
-		txtPalabClave = new JTextField();
-		txtPalabClave.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
-		txtPalabClave.setColumns(10);
-		txtPalabClave.setBounds(276, 202, 128, 19);
-		usuario.add(txtPalabClave);
+		pregunta = new JComboBoxBD(rb.getString("SQL_COMBO_PREGUNTA"));
+		pregunta.setBounds(80, 206, 332, 20);
+		panel.add(pregunta);
 		
 		JLabel lblDeseaCambiarLa = new JLabel("Desea cambiar su respuesta:");
+		lblDeseaCambiarLa.setBounds(80, 246, 194, 15);
+		panel.add(lblDeseaCambiarLa);
 		lblDeseaCambiarLa.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblDeseaCambiarLa.setBounds(52, 204, 194, 15);
-		usuario.add(lblDeseaCambiarLa);
+		
+		txtPalabClave = new JTextField();
+		txtPalabClave.setBounds(302, 244, 128, 19);
+		panel.add(txtPalabClave);
+		txtPalabClave.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
+		txtPalabClave.setColumns(10);
+		
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(287, 318, 89, 23);
+		panel.add(btnCancelar);
 		
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(97, 254, 89, 23);
+		btnGuardar.setBounds(134, 318, 89, 23);
+		panel.add(btnGuardar);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnGrabarActionPerformed(arg0);
 			}
 		});
-		usuario.add(btnGuardar);
-		
-		btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnCancelar.setBounds(250, 254, 89, 23);
-		usuario.add(btnCancelar);
-		
-		pregunta = new JComboBoxBD(rb.getString("SQL_COMBO_PREGUNTA"));
-		pregunta.setBounds(62, 171, 332, 20);
-		usuario.add(pregunta);
 		
 		
 	}
