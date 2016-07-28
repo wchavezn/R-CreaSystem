@@ -369,12 +369,13 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 	private void tamañoTablas() {
 		
 		int [] anchos = {50, 200, 50};
+		int [] as= {100, 200, 50};
 		
 		for (int i = 0; i < table.getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
 		}
 		for (int i = 0; i < tableul.getColumnCount(); i++) {
-			tableul.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+			tableul.getColumnModel().getColumn(i).setPreferredWidth(as[i]);
 		}
 		for (int i = 0; i < tablelocal.getColumnCount(); i++) {
 			tablelocal.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
