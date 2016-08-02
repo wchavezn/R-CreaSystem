@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.placamas.beans.ReglasBean;
 import com.placamas.componentes.JComboBoxBD;
+import com.placamas.componentes.JComboBoxBD1;
 import com.placamas.controlador.ReglasControlador;
 
 import javax.swing.border.TitledBorder;
@@ -49,8 +50,6 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 	int tab=0,tap=0;
 	String math_tab,math_can;
 	private JButton btnGrabar;
-	private JButton btnEliminar;
-	private JButton btnNuevo;
 	private JToolBar toolBar;
 	private JLabel label_1;
 	JPanel reglas;
@@ -106,7 +105,7 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 	private JTextField textField_21;
 	private JLabel lblUsuarioDigitador;
 	private JLabel lblUsuarioEmisorLp;
-	private JCheckBox chckbxNewCheckBox;
+	private JCheckBox chckbxNewRMS;
 	private JCheckBox chckbxNewCheckBox_1;
 	private JCheckBox chckbxImprimirFullEtiquetas;
 	private JCheckBox chckbxAgruparAlGrabar;
@@ -151,27 +150,10 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		toolBar.setBounds(0, 0, 1194, 35);
 		reglas.add(toolBar);
 		
-		btnNuevo = new JButton("");
-		toolBar.add(btnNuevo);
-		btnNuevo.setIcon(new ImageIcon(FrmReglas.class.getResource("/Iconos_PlacaMas/_New_document.png")));
-		
 		JButton button = new JButton("");
 		button.setIcon(new ImageIcon(FrmReglas.class.getResource("/Iconos_PlacaMas/_Modify.png")));
 		button.setToolTipText("Eliminar");
 		toolBar.add(button);
-
-		btnEliminar = new JButton("");
-		toolBar.add(btnEliminar);
-		btnEliminar.setIcon(new ImageIcon(FrmReglas.class.getResource("/Iconos_PlacaMas/_Erase.png")));
-		
-        ///QUITANDOLE LOS BORDES A LOS BOTONES
-		/*
-		btnNuevo.setBorder(null);
-		btnEliminar.setBorder(null);
-		btnGrabar.setBorder(null);*/
-		
-		btnNuevo.setToolTipText("Nuevo Registro");
-		btnEliminar.setToolTipText("Eliminar");
 		
 		label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(FrmColores.class.getResource("/gui/img/banners/BanColor.png")));
@@ -194,13 +176,6 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 				btnGrabarActionPerformed(arg0);
 			}
 		});
-			
-		btnEliminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				btnEliminarActionPerformed(arg0);
-			}
-		});
-		btnNuevo.addActionListener(this);
 		setClosable(true); //->Se pueda cerrara
 		setDefaultCloseOperation(HIDE_ON_CLOSE); //Se oculte al cerrara
 		Listar();
@@ -214,9 +189,9 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		reglas.add(panel_MantenimientoLP);
 		panel_MantenimientoLP.setLayout(null);
 		
-		chckbxNewCheckBox = new JCheckBox("RMS-Obligatorio Importar Tablero");
-		chckbxNewCheckBox.setBounds(27, 32, 194, 16);
-		panel_MantenimientoLP.add(chckbxNewCheckBox);
+		chckbxNewRMS = new JCheckBox("RMS-Obligatorio Importar Tablero");
+		chckbxNewRMS.setBounds(27, 32, 194, 16);
+		panel_MantenimientoLP.add(chckbxNewRMS);
 		
 		chckbxNewCheckBox_1 = new JCheckBox("CC-Obligatorio Contacto y Movil");
 		chckbxNewCheckBox_1.setBounds(27, 51, 179, 16);
@@ -229,11 +204,11 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_OperAuto.setLayout(null);
 		
 		chckbxImprimirFullEtiquetas = new JCheckBox("Imprimir full Etiquetas");
-		chckbxImprimirFullEtiquetas.setBounds(17, 46, 173, 16);
+		chckbxImprimirFullEtiquetas.setBounds(17, 46, 157, 16);
 		panel_OperAuto.add(chckbxImprimirFullEtiquetas);
 		
 		chckbxAgruparAlGrabar = new JCheckBox("Agrupar Piezas al Grabar");
-		chckbxAgruparAlGrabar.setBounds(17, 27, 173, 16);
+		chckbxAgruparAlGrabar.setBounds(17, 27, 157, 16);
 		panel_OperAuto.add(chckbxAgruparAlGrabar);
 		
 		chckbxCopiarUltimo = new JCheckBox("Copiar Ultimo Item");
@@ -241,7 +216,7 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_OperAuto.add(chckbxCopiarUltimo);
 		
 		chckbxAadirItemNuevo = new JCheckBox("A\u00F1adir Item Nuevo");
-		chckbxAadirItemNuevo.setBounds(17, 65, 173, 16);
+		chckbxAadirItemNuevo.setBounds(17, 65, 157, 16);
 		panel_OperAuto.add(chckbxAadirItemNuevo);
 		
 		Corte = new JPanel();
@@ -251,7 +226,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		Corte.setLayout(null);
 		
 		lblEspSierr = new JLabel("Espesor de Sierra (mm)");
-		lblEspSierr.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEspSierr.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEspSierr.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblEspSierr.setBounds(70, 15, 138, 20);
 		Corte.add(lblEspSierr);
 		
@@ -262,7 +238,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		Corte.add(txtEspSierra);
 		
 		lblRefilarServicio = new JLabel("Refilar Servicio Premiun(mm)");
-		lblRefilarServicio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblRefilarServicio.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblRefilarServicio.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblRefilarServicio.setBounds(39, 37, 169, 20);
 		Corte.add(lblRefilarServicio);
 		
@@ -315,32 +292,38 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_Enchape.add(textField_11);
 		
 		lblMermaPas_1 = new JLabel(" Merma Pas. > 150 mm");
-		lblMermaPas_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMermaPas_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMermaPas_1.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblMermaPas_1.setBounds(66, 132, 143, 20);
 		panel_Enchape.add(lblMermaPas_1);
 		
 		lblMermaPas = new JLabel(" Merma Pas. < 150 mm");
-		lblMermaPas.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMermaPas.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMermaPas.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblMermaPas.setBounds(66, 112, 143, 20);
 		panel_Enchape.add(lblMermaPas);
 		
 		lblMerma = new JLabel(" Merma Pas. < 100 mm");
-		lblMerma.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblMerma.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMerma.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblMerma.setBounds(66, 90, 143, 20);
 		panel_Enchape.add(lblMerma);
 		
 		lblLargoMinimoDe = new JLabel("Largo minimo de pieza(mm)");
-		lblLargoMinimoDe.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblLargoMinimoDe.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblLargoMinimoDe.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblLargoMinimoDe.setBounds(47, 66, 162, 20);
 		panel_Enchape.add(lblLargoMinimoDe);
 		
 		lblAnchoMinimoDe = new JLabel("Ancho minimo de pieza(mm)");
-		lblAnchoMinimoDe.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblAnchoMinimoDe.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblAnchoMinimoDe.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblAnchoMinimoDe.setBounds(44, 45, 165, 20);
 		panel_Enchape.add(lblAnchoMinimoDe);
 		
 		lblEspesorMinimoDe = new JLabel("Espesor minimo de pieza (mm)");
-		lblEspesorMinimoDe.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEspesorMinimoDe.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEspesorMinimoDe.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblEspesorMinimoDe.setBounds(30, 23, 179, 20);
 		panel_Enchape.add(lblEspesorMinimoDe);
 		
@@ -351,7 +334,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_Enchape.add(textField_16);
 		
 		lblCogidonoCanto = new JLabel("Cogido \"No Canto\"");
-		lblCogidonoCanto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCogidonoCanto.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblCogidonoCanto.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblCogidonoCanto.setBounds(104, 154, 105, 20);
 		panel_Enchape.add(lblCogidonoCanto);
 		
@@ -374,12 +358,14 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_Ranura.add(textField_15);
 		
 		lblCodigoranuraaLibre = new JLabel("Codigo \"Ranura Libre\"");
-		lblCodigoranuraaLibre.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigoranuraaLibre.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblCodigoranuraaLibre.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblCodigoranuraaLibre.setBounds(59, 37, 133, 20);
 		panel_Ranura.add(lblCodigoranuraaLibre);
 		
 		lblEspesorMinimoDe_1 = new JLabel("Espesor minimo de pieza(mm)");
-		lblEspesorMinimoDe_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblEspesorMinimoDe_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblEspesorMinimoDe_1.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblEspesorMinimoDe_1.setBounds(17, 15, 175, 20);
 		panel_Ranura.add(lblEspesorMinimoDe_1);
 		
@@ -395,17 +381,19 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_Sistema.setLayout(null);
 		
 		lblCodigoDeTienda = new JLabel("Codigo de Tienda");
-		lblCodigoDeTienda.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCodigoDeTienda.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblCodigoDeTienda.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblCodigoDeTienda.setBounds(20, 41, 100, 20);
 		panel_Sistema.add(lblCodigoDeTienda);
 		
-		comboBox_2 = new JComboBoxBD(rb.getString("SQL_COMBO_IDLOCAL"));
-		comboBox_2.setBounds(122, 42, 110, 20);
+		comboBox_2 = new JComboBoxBD1(rb.getString("SQL_COMBO_IDLOCAL"));
+		comboBox_2.setBounds(132, 42, 100, 20);
 		panel_Sistema.add(comboBox_2);
 		
 		lblFormatoPedido = new JLabel("Formato Pedido");
-		lblFormatoPedido.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblFormatoPedido.setBounds(20, 63, 90, 20);
+		lblFormatoPedido.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblFormatoPedido.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblFormatoPedido.setBounds(30, 63, 90, 20);
 		panel_Sistema.add(lblFormatoPedido);
 		
 		textField_19 = new JTextField();
@@ -421,7 +409,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.setLayout(null);
 		
 		lblServidorFtp = new JLabel("Servidor FTP");
-		lblServidorFtp.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblServidorFtp.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblServidorFtp.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblServidorFtp.setBounds(62, 27, 74, 20);
 		panel_FTP.add(lblServidorFtp);
 		
@@ -432,7 +421,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField);
 		
 		lblCarpetaFtp = new JLabel("Carpeta FTP");
-		lblCarpetaFtp.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCarpetaFtp.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblCarpetaFtp.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblCarpetaFtp.setBounds(65, 49, 71, 20);
 		panel_FTP.add(lblCarpetaFtp);
 		
@@ -443,7 +433,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_1);
 		
 		lblUsuarioFtp = new JLabel("Usuario FTP");
-		lblUsuarioFtp.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblUsuarioFtp.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblUsuarioFtp.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblUsuarioFtp.setBounds(66, 70, 70, 20);
 		panel_FTP.add(lblUsuarioFtp);
 		
@@ -454,7 +445,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_2);
 		
 		lblPass = new JLabel("Password");
-		lblPass.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPass.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblPass.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblPass.setBounds(81, 92, 55, 20);
 		panel_FTP.add(lblPass);
 		
@@ -465,7 +457,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_3);
 		
 		lblConfirmarPassword = new JLabel("Confirmar Password");
-		lblConfirmarPassword.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblConfirmarPassword.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblConfirmarPassword.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblConfirmarPassword.setBounds(20, 116, 116, 20);
 		panel_FTP.add(lblConfirmarPassword);
 		
@@ -476,7 +469,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_4);
 		
 		lblServidorProxy = new JLabel("Servidor Proxy");
-		lblServidorProxy.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblServidorProxy.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblServidorProxy.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblServidorProxy.setBounds(53, 136, 83, 20);
 		panel_FTP.add(lblServidorProxy);
 		
@@ -487,7 +481,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_5);
 		
 		lblPuertoProxy = new JLabel("Puerto Proxy");
-		lblPuertoProxy.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblPuertoProxy.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblPuertoProxy.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblPuertoProxy.setBounds(63, 158, 73, 20);
 		panel_FTP.add(lblPuertoProxy);
 		
@@ -498,7 +493,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_17);
 		
 		lblArchivoBach = new JLabel("Archivo Batch");
-		lblArchivoBach.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblArchivoBach.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblArchivoBach.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblArchivoBach.setBounds(377, 92, 78, 20);
 		panel_FTP.add(lblArchivoBach);
 		
@@ -509,7 +505,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_20);
 		
 		lblArchivoDeTrans = new JLabel("Archivo de Transf.");
-		lblArchivoDeTrans.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblArchivoDeTrans.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblArchivoDeTrans.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblArchivoDeTrans.setBounds(350, 115, 105, 20);
 		panel_FTP.add(lblArchivoDeTrans);
 		
@@ -520,7 +517,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(textField_21);
 		
 		lblUsuarioDigitador = new JLabel("Usuario Digitador LP");
-		lblUsuarioDigitador.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblUsuarioDigitador.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblUsuarioDigitador.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblUsuarioDigitador.setBounds(339, 135, 116, 20);
 		panel_FTP.add(lblUsuarioDigitador);
 		
@@ -529,7 +527,8 @@ public class FrmReglas extends JInternalFrame implements ActionListener{
 		panel_FTP.add(comboBox_1);
 		
 		lblUsuarioEmisorLp = new JLabel("Usuario Emisor LP");
-		lblUsuarioEmisorLp.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblUsuarioEmisorLp.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblUsuarioEmisorLp.setFont(new Font("Dialog", Font.PLAIN, 11));
 		lblUsuarioEmisorLp.setBounds(350, 157, 105, 20);
 		panel_FTP.add(lblUsuarioEmisorLp);
 		
@@ -561,21 +560,7 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 }
 
 
-protected void btnEliminarActionPerformed(ActionEvent arg0) {
-
-
-}
-
-
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnNuevo) {
-			btnNuevoActionPerformed(arg0);
-		}
-	}
-	
-
-	protected void btnNuevoActionPerformed(ActionEvent arg0) {
-		
 	}
 	
 	

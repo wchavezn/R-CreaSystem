@@ -37,6 +37,7 @@ import com.placamas.beans.MarcasBean;
 import com.placamas.beans.UsuarioBean;
 import com.placamas.beans.UsuarioRight;
 import com.placamas.componentes.JComboBoxBD;
+import com.placamas.componentes.JComboBoxBD1;
 import com.placamas.controlador.LocalesControlador;
 import com.placamas.controlador.MarcasControlador;
 import com.placamas.controlador.UsuarioControlador;
@@ -59,7 +60,7 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 	
 	UsuarioControlador obj=new UsuarioControlador();
 	Boolean estado=false;
-	public JTable table;
+	public JTable tbusuario;
 	public JTable tableul;
 	public JTable tablelocal;
 	private JButton btnGrabar;
@@ -72,6 +73,7 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 	private JTextField txtIdUser;
 	private JTextField txtNomb_User;
 	private JTextField txtEmail;
+	JComboBoxBD1 pregunta;
 
 	/**
 	 * Launch the application.
@@ -154,17 +156,31 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 		scrollPane.setBounds(10, 25, 299, 336);
 		panel.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		table.setBounds(328, 292, 318, 138);
-		table.addMouseListener(this);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
+		tbusuario = new JTable();
+		scrollPane.setViewportView(tbusuario);
+		tbusuario.setBounds(328, 292, 318, 138);
+		tbusuario.addMouseListener(this);
+		tbusuario.setModel(new DefaultTableModel(
+			new Object[][][] {
 			},
 			new String[] {
-				"Codigo", "Nombre de Usuario"
+				"Codigo", "Nombre de Usuario","Email"
 			}
 		));
+		tbusuario.addKeyListener(new KeyAdapter() {
+			@Override
+			//DISEÑO CLIC DERECHO EN EL SCROL / EVENT /KEY/ KEYRELEASED
+			public void keyReleased(KeyEvent arg0) {
+				Mostrar();
+			
+			}
+		});
+		tbusuario.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				Mostrar();
+			}
+		});
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(349, 40, 754, 433);
@@ -175,37 +191,37 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 		
 		JLabel lblCodigo = new JLabel("Codigo:");
 		lblCodigo.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblCodigo.setBounds(22, 42, 48, 20);
+		lblCodigo.setBounds(23, 22, 48, 20);
 		panel_1.add(lblCodigo);
 		lblCodigo.setFont(new Font("Dialog", Font.PLAIN, 11));
 		
 		txtIdUser = new JTextField();
 		//txtIdUser.setEnabled(false);
-		txtIdUser.setBounds(80, 42, 115, 20);
+		txtIdUser.setBounds(81, 22, 115, 20);
 		panel_1.add(txtIdUser);
 		txtIdUser.setColumns(10);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblNombre.setBounds(212, 42, 54, 20);
+		lblNombre.setBounds(213, 22, 54, 20);
 		panel_1.add(lblNombre);
 		lblNombre.setFont(new Font("Dialog", Font.PLAIN, 11));
 		
 		txtNomb_User = new JTextField();
 		//txtNombre.setEnabled(false);
-		txtNomb_User.setBounds(272, 42, 180, 20);
+		txtNomb_User.setBounds(273, 22, 180, 20);
 		panel_1.add(txtNomb_User);
 		txtNomb_User.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblEmail.setBounds(475, 41, 36, 20);
+		lblEmail.setBounds(476, 21, 36, 20);
 		panel_1.add(lblEmail);
 		lblEmail.setFont(new Font("Dialog", Font.PLAIN, 11));
 		
 		txtEmail = new JTextField();
 		//txtEmail.setEnabled(false);
-		txtEmail.setBounds(521, 42, 200, 20);
+		txtEmail.setBounds(522, 22, 200, 20);
 		panel_1.add(txtEmail);
 		txtEmail.setColumns(10);
 		
@@ -337,6 +353,10 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 		btnAgrLocal.setContentAreaFilled(false);
 		btnAgrLocal.setIcon(new ImageIcon(FrmControlUsuarios.class.getResource("/Iconos_PlacaMas/_Back.png")));
 		
+		pregunta = new JComboBoxBD1(rb.getString("SQL_COMBO_PREGUNTA"));
+		pregunta.setBounds(213, 51, 275, 20);
+		panel_1.add(pregunta);
+		
 		JButton btnAadirPrivilegios = new JButton("Accesos al Sistema");
 		btnAadirPrivilegios.setBounds(72, 423, 209, 50);
 		panel_2.add(btnAadirPrivilegios);
@@ -368,11 +388,11 @@ public class FrmControlUsuarios extends JInternalFrame implements ActionListener
 	}
 	private void tamañoTablas() {
 		
-		int [] anchos = {50, 200, 50};
+		int [] anchos = {90, 180, 90};
 		int [] as= {100, 200, 50};
 		
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+		for (int i = 0; i < tbusuario.getColumnCount(); i++) {
+			tbusuario.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
 		}
 		for (int i = 0; i < tableul.getColumnCount(); i++) {
 			tableul.getColumnModel().getColumn(i).setPreferredWidth(as[i]);
@@ -403,10 +423,10 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
             
         }
         else
-        if(texto.length()>0 || texto.length()<11){
+        if(texto.length()>0 && texto.length()<11){
         	estado=true;
         if(estado==true){ 	
-		UsuarioBean l=new UsuarioBean(txtIdUser.getText(), txtNomb_User.getText(),txtIdUser.getText(),txtNomb_User.getText(),txtEmail.getText());
+		UsuarioBean l=new UsuarioBean(txtIdUser.getText(), txtNomb_User.getText(),txtIdUser.getText(), pregunta.getSelectedItem().toString() ,txtNomb_User.getText(),txtEmail.getText());
 		int valor=obj.insertaUsuario(l);
 		if(valor==1){
 			mensaje("Registro Exitoso de Usuario");
@@ -432,6 +452,7 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 	protected void btnNuevoActionPerformed(ActionEvent arg0) {
 		txtIdUser.setText("");
 		txtNomb_User.setText("");
+		txtEmail.setText("");
 		txtIdUser.requestFocus();
 		estado=true;
 	}
@@ -485,7 +506,7 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 		ArrayList<UsuarioBean> lista = obj.listarUsuario();
 		
 		//el model de la tabla(GUI)
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		DefaultTableModel model = (DefaultTableModel) tbusuario.getModel();
 		
 		//limpia la tabla
 		model.setRowCount(0);
@@ -493,7 +514,7 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 		//paso la data de la lista al model
 		for (UsuarioBean bean : lista) {
 			model.addRow(new Object[]{bean.getIdUser(),
-										bean.getUser_Nomb()});			
+										bean.getUser_Nomb(),bean.getEmail()});			
 		}
 	}
 	
@@ -501,10 +522,11 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 		
 		TableModel modelo2 = tableul.getModel();
 
-		int[] indexs = table.getSelectedRows();
+		int[] indexs = tbusuario.getSelectedRows();
 		Object[] row = new Object[2];
 		DefaultTableModel modelo1 = (DefaultTableModel) tableul.getModel();
 		
+		/*
 		for (int i = 0; i < indexs.length; i++) {
 			
 			if (modelo1.getValueAt(i,0).equals(modelo2.getValueAt(i, 0))){				
@@ -515,14 +537,23 @@ protected void btnGrabarActionPerformed(ActionEvent arg0) {
 				modelo1.addRow(row);
 			}	
 		}
-		
+		*/
 		//limpiar();
 
 	}
 	
+	void Mostrar(){
+		
+		int fila=tbusuario.getSelectedRow();
+		txtIdUser.setText(""+tbusuario.getValueAt(fila, 0));
+		txtNomb_User.setText(""+tbusuario.getValueAt(fila, 1));
+		txtEmail.setText(""+tbusuario.getValueAt(fila, 2));
+		
+	}
+	
 	public void limpiar(){
 
-		for (int i = 0; i < table.getRowCount(); i++) {
+		for (int i = 0; i < tbusuario.getRowCount(); i++) {
 			modelo.removeRow(i);
 			i =-1;
 		}

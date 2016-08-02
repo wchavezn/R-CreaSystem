@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import com.placamas.vista.FrmLogin;
 import com.placamas.beans.UsuarioBean;
 import com.placamas.componentes.JComboBoxBD;
+import com.placamas.componentes.JComboBoxBD1;
 import com.placamas.controlador.UsuarioControlador;
 
 import javax.swing.JCheckBox;
@@ -46,12 +47,11 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 	private JTextField txtPassAct;
 	private JTextField txtPassNew;
 	private JButton btnGuardar;
-	private JButton btnCancelar;
-	JComboBoxBD pregunta;
+	JComboBoxBD1 pregunta;
 	public JPanel usuario;
 	JSeparator separator;
 	private JTextField txtPassNew1;
-	private JTextField txtPalabClave;
+	private JTextField txtResp;
 	private String newc;
 
 
@@ -124,7 +124,7 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 		panel.add(lblCampoOpcional);
 		lblCampoOpcional.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		pregunta = new JComboBoxBD(rb.getString("SQL_COMBO_PREGUNTA"));
+		pregunta = new JComboBoxBD1(rb.getString("SQL_COMBO_PREGUNTA"));
 		pregunta.setBounds(80, 206, 332, 20);
 		panel.add(pregunta);
 		
@@ -133,26 +133,22 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 		panel.add(lblDeseaCambiarLa);
 		lblDeseaCambiarLa.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
-		txtPalabClave = new JTextField();
-		txtPalabClave.setBounds(302, 244, 128, 19);
-		panel.add(txtPalabClave);
-		txtPalabClave.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
-		txtPalabClave.setColumns(10);
+		txtResp = new JTextField();
+		txtResp.setBounds(302, 244, 128, 19);
+		panel.add(txtResp);
+		txtResp.setToolTipText("Escribe el Codigo de la Marca (2 Car)");
+		txtResp.setColumns(10);
 		
-		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(287, 318, 89, 23);
-		panel.add(btnCancelar);
+		JToolBar toolBar = new JToolBar();
+		toolBar.setBounds(0, 0, 135, 30);
+		usuario.add(toolBar);
 		
-		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(134, 318, 89, 23);
-		panel.add(btnGuardar);
+		btnGuardar = new JButton("");
+		btnGuardar.setIcon(new ImageIcon(FrmCambiar.class.getResource("/Iconos_PlacaMas/_Save.png")));
+		toolBar.add(btnGuardar);
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnGrabarActionPerformed(arg0);
-			}
-		});
-		btnCancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
@@ -170,6 +166,7 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 		String clave=txtPassAct.getText();
 		String clavelog = FrmLogin.txtClave.getText();
 		
+		String resp=txtResp.getText();
 		String pass1=txtPassNew1.getText();
 		String pass=txtPassNew.getText();
 		
@@ -177,24 +174,32 @@ public class FrmCambiar extends JInternalFrame implements ActionListener{
 		
 		
 		clave=clave.replaceAll(" ", "");
-       
+		pass=pass.replaceAll(" ", "");
+		pass1=pass1.replaceAll(" ", "");
+		resp=resp.replaceAll(" ", "");
         
-        if(clave.length()==0){
+        	
+        if(clave.length()==0 || pass1.length()==0 || pass.length()==0 || resp.length()==0){
         	
             mensaje("ERROR: No se aceptan campos en blanco");
             
-        }
+        }  
         else
-        	if(txtPassAct.getText().equals(FrmLogin.txtClave.getText()) || txtPassNew.getText().equals(txtPassNew1.getText())){
+        	if(txtPassAct.getText().equals(FrmLogin.txtClave.getText()) && txtPassNew.getText().equals(txtPassNew1.getText())){
         	estado=true;
-	        if(estado==true){ 	
-			
-	        	UsuarioBean bean =  obj.cambiarContraseña(pass, log );
-	        	if(bean!= null){
-				mensaje("Cambio de contraseña");
-				}
-        	  }
-	        }
+		        if(estado==true){ 	
+				
+		        	UsuarioBean bean =  obj.cambiarContraseña(pass,pregunta.getSelectedItem().toString(),txtResp.getText(), log );
+		        	if(bean!= null){
+					mensaje("Cambio de contraseña");
+					}
+		        	
+	        	  }
+	        	}
+        	
+         else{
+		        	mensaje("campos incorrectos");
+		        }
       }
 
 

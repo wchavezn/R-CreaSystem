@@ -89,9 +89,8 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 					/* ITEMS DEL MENU USUARIOS*/
 	////////////////////////////////////////////////////////////////////////
 	
-	public JMenuItem mItem17    = new JMenuItem("Gestión de Usuarios");
-	public JMenuItem mItem18    = new JMenuItem("Control de Usuarios");
-	public JMenuItem mItem19    = new JMenuItem("Cambiar Contraseña");
+	public JMenuItem mItem17    = new JMenuItem("Control de Usuarios");
+	public JMenuItem mItem18    = new JMenuItem("Cambiar Contraseña");
 
 
 	////////////////////////////////////////////////////////////////////////
@@ -225,7 +224,7 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 					listaItemMenus.add(mItem16);
 					listaItemMenus.add(mItem17);
 					listaItemMenus.add(mItem18);
-					listaItemMenus.add(mItem19);
+					
 									
 		
 					
@@ -248,7 +247,7 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 					mItem15.setVisible(false);
 					mItem16.setVisible(false);
 					mItem17.setVisible(false);
-					mItem19.setVisible(false);
+				
 					
 
 					mMenu01.setVisible(false);
@@ -294,8 +293,7 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 		mItem17.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		mItem18.addActionListener(this);
 		mItem18.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		mItem19.addActionListener(this);
-		mItem19.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
 			
 		//-----------------------------------------------------------
 		
@@ -318,7 +316,7 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 		mItem16.setActionCommand("mItem16");
 		mItem17.setActionCommand("mItem17");
 		mItem18.setActionCommand("mItem18");
-		mItem19.setActionCommand("mItem19");
+	
 		
 		
 		
@@ -353,7 +351,6 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 		mMenu03.add(mItem16);
 		mMenu04.add(mItem17);
 		mMenu04.add(mItem18);
-		mMenu04.add(mItem19);
 	
 }
 
@@ -476,20 +473,15 @@ public class MenuPrincipal extends JFrame implements ActionListener, MouseListen
 
 		}
 		
-		//GESTION DE USUARIOS//
-		if(e.getSource()==mItem17){
-			
-		
-		}
 		//CONTROL DE USUARIOS//
-		if(e.getSource()==mItem18){
+		if(e.getSource()==mItem17){
 			FrmControlUsuarios.setVisible(true);
 			tabbedPane.add(FrmControlUsuarios.control, "Control de Usuarios    ");	
 		
 		}
 		
 		//CAMBIAR CONTRASEÑA//
-		if(e.getSource()==mItem19){
+		if(e.getSource()==mItem18){
 			FrmCambiar.setVisible(true);
 			tabbedPane.add(FrmCambiar.usuario, "Cambiar Contaseña    ");
 

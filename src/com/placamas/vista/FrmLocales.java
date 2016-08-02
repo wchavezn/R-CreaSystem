@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,9 +30,12 @@ import javax.swing.table.DefaultTableModel;
 
 import com.placamas.beans.LocalBean;
 import com.placamas.beans.MarcasBean;
+import com.placamas.componentes.JComboBoxBD1;
 import com.placamas.controlador.LocalesControlador;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
+import javax.swing.JComboBox;
 
 public class FrmLocales extends JInternalFrame implements ActionListener {
 
@@ -55,7 +59,10 @@ public class FrmLocales extends JInternalFrame implements ActionListener {
 	private JButton btnEditar;
 	private JButton btnEditarNo;
 	private JSeparator separator;
-
+	private JComboBoxBD1 comboBox;
+	private JComboBoxBD1 comboBox_1;
+	private JComboBoxBD1 comboBox_2;
+	ResourceBundle rb = ResourceBundle.getBundle("database_sql");
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -170,6 +177,18 @@ public class FrmLocales extends JInternalFrame implements ActionListener {
 		txtLoc_Nomb.setToolTipText("Escribe una descripción para el Local");
 		txtLoc_Nomb.setColumns(10);
 		
+		comboBox = new JComboBoxBD1(rb.getString("SQL_COMBO_DEPARTAMENTO"));
+		comboBox.setBounds(384, 40, 98, 20);
+		panel.add(comboBox);
+		
+		comboBox_1 = new JComboBoxBD1(rb.getString("SQL_COMBO_PROVINCIA"));
+		comboBox_1.setBounds(499, 40, 98, 20);
+		panel.add(comboBox_1);
+		/*
+		comboBox_2 = new JComboBoxBD1(rb.getString("SQL_COMBO_DISTRITO"));
+		comboBox_2.setBounds(615, 40, 98, 20);
+		panel.add(comboBox_2);
+		*/
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(35, 136, 327, 300);
 		panel.add(scrollPane);

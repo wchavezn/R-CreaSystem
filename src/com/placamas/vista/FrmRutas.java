@@ -189,7 +189,7 @@ public class FrmRutas extends JInternalFrame implements ActionListener {
 			
 			
 			txtRuta = new JTextField();
-			txtRuta.setBounds(172, 73, 178, 20);
+			txtRuta.setBounds(172, 73, 265, 20);
 			panel.add(txtRuta);
 			txtRuta.setToolTipText("Escribe una Descripción para la ruta");
 			
@@ -222,8 +222,9 @@ public class FrmRutas extends JInternalFrame implements ActionListener {
 			txtIdRuta.setText(""+tbRutas.getValueAt(fila, 0));
 			txtRuta.setText(""+tbRutas.getValueAt(fila, 1));
 			
-			btnAbrir = new JButton("...");
-			btnAbrir.setBounds(382, 73, 89, 20);
+			btnAbrir = new JButton("");
+			btnAbrir.setIcon(new ImageIcon(FrmRutas.class.getResource("/Iconos_PlacaMas/_Downloads_folder.png")));
+			btnAbrir.setBounds(502, 72, 49, 20);
 			panel.add(btnAbrir);
 			btnAbrir.setToolTipText("selecionar una ubicacion");
 			btnAbrir.addActionListener(new ActionListener() {

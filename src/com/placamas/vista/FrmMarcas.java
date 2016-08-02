@@ -227,6 +227,8 @@ public class FrmMarcas extends JInternalFrame implements ActionListener {
 	
 	}
 	
+	
+	
 private void tamañoTablas() {
 		
 		int [] anchos = {30, 200, 50};

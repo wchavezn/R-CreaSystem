@@ -31,7 +31,7 @@ public class UsuarioControlador {
 			pstm.setString(2, clave);
 			ResultSet rs = pstm.executeQuery();
 			if (rs.next()) {
-				bean = new UsuarioBean(sql, sql, sql,sql,sql);
+				bean = new UsuarioBean(sql, sql, sql,sql,sql, sql);
 				bean.setIdUser(rs.getString("idUser"));
 				bean.setUser_Nomb(rs.getString(2));
 				bean.setUser_Pasw("User_Pasw");
@@ -63,7 +63,7 @@ public class UsuarioControlador {
 			pstm.setString(2, pregunta);
 			ResultSet rs = pstm.executeQuery();
 			if (rs.next()) {
-				bean = new UsuarioBean(sql, sql, sql,sql,sql);
+				bean = new UsuarioBean(sql, sql, sql,sql,sql,sql);
 				bean.setIdUser(rs.getString("idUser"));
 				bean.setUser_Nomb(rs.getString(2));
 				bean.setUser_Pasw(rs.getString(3));
@@ -150,22 +150,25 @@ public class UsuarioControlador {
 	}
 	
 	
-	public UsuarioBean cambiarContraseña(String pass,String log ) {
+	public UsuarioBean cambiarContraseña(String pass,String preg ,String resp, String log ) {
 		
 		
 		UsuarioBean bean = null;
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		
-		conn = new ConexionDB().getConexion();
+		
+		try {conn = new ConexionDB().getConexion();
 		String sql = "update user_data"+
-					" set User_Pasw=?"+
+					" set User_Pasw=?, pregunta=? , respuesta=?"+
 					" where idUser=?";
-		try {
 			pstm = conn.prepareStatement(sql);
 
 			pstm.setString(1, pass);
-			pstm.setString(2, log);
+			pstm.setString(2, preg);
+			pstm.setString(3, resp);
+			pstm.setString(4, log);
+			
 			int rs = pstm.executeUpdate();
 			
 			String mensaje = "Los datos se han Modoficado de Manera Satisfactoria...";
@@ -192,13 +195,14 @@ public class UsuarioControlador {
 		PreparedStatement pstm = null;
 		try {
 			conn = new ConexionDB().getConexion();
-			String sql ="insert into user_data values(?,?,?,?,?)";
+			String sql ="insert into user_data values(?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, x.getIdUser());
 			pstm.setString(2, x.getUser_Nomb());
 			pstm.setString(3, x.getUser_Pasw());
-			pstm.setString(4, x.getResp());
-			pstm.setString(5, x.getEmail());
+			pstm.setString(4, x.getPregunta());
+			pstm.setString(5, x.getResp());
+			pstm.setString(6, x.getEmail());
 			
 
 			contador = pstm.executeUpdate();
@@ -228,10 +232,11 @@ public ArrayList<UsuarioBean> listarUsuario(){
 			ResultSet rs = pstm.executeQuery();
 			
 			while(rs.next()){
-				bean = new UsuarioBean(sql, sql, sql,sql,sql);
+				bean = new UsuarioBean(sql, sql, sql,sql,sql,sql);
 				bean.setIdUser(rs.getString("idUser"));
 				bean.setUser_Nomb(rs.getString("user_Nomb"));
 				bean.setUser_Pasw(rs.getString("user_Pasw"));
+				bean.setEmail(rs.getString("email"));
 				
 				data.add(bean);
 			}
@@ -296,7 +301,7 @@ public ArrayList<UsuarioBean> listarPregunta(String idpreg){
 		
 		while (rs.next()) {
 			bean=new UsuarioBean(rs.getString(1),
-					rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+					rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6));
 			
 			data.add(bean);
 		}

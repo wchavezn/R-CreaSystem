@@ -29,7 +29,7 @@ public class JComboBoxBD extends JComboBox {
 			conn = new ConexionDB().getConexion();
 			pstm = conn.prepareStatement(sql);
 			rs = pstm.executeQuery();
-			addItem("[seleccione]");
+			//addItem("[seleccione]");
 			while(rs.next()){
 				addItem(rs.getString(1)+": "+ rs.getString(2));
 			}

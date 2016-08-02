@@ -10,11 +10,12 @@ public class UsuarioBean {
 	private String Email;
 	
 
-	public UsuarioBean(String idUser, String user_Nomb, String user_Pasw,  String resp, String email) {
+	public UsuarioBean(String idUser, String user_Nomb, String user_Pasw, String pregunta, String resp, String email) {
 		super();
 		this.idUser = idUser;
 		User_Nomb = user_Nomb;
 		User_Pasw = user_Pasw;
+		Pregunta=pregunta;
 		Resp = resp;
 		Email=email;
 		
